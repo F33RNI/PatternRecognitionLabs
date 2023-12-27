@@ -41,3 +41,62 @@
     ```
    4. Если всё верно, начните запись видео, изменяйте `IMAGE_PATH ` на разные пути к разным картинкам, запускайте скрипт и показывайте результат
    5. Готово
+2. **Работа 2. Трансфертное обучение**
+   1. **Если для скачивания этого репозитория вы использовали `git`**, то для того, чтобы подгрузить новые файлы для этой лабораторной выполните команду `git pull`
+   2. Активируйте виртуальную среду и установите недостающие пакеты `pip install -r requirements.txt`
+   3. Перейдите в директорию LR2 используя команду `cd LR2`
+   4. В файле `main.py` поменяйте `IMAGE_PATH ` на путь к фотке кошбки / шобаки которую хочите классифицировать
+      1. Рекомендую использовать примеры из датасета `kagglecatsanddogs_5340`. Например: `kagglecatsanddogs_5340/PetImages/Cat/0.jpg`
+      2. _(в датасете, с целью экономии места, занимаемого репозиторием, было оставлено только по 20 картинок)_
+   5. Запустите скрипт используя команду `python main.py`. Выход должен выглядеть примерно так
+    ```
+    Predicted Label: cat
+    Probabilities: tensor([[0.9989, 0.0011]], grad_fn=<SoftmaxBackward0>)
+    ```
+   6. Если всё верно, начните запись видео, изменяйте `IMAGE_PATH ` на разные пути к разным картинкам, запускайте скрипт и показывайте результат
+   7. Для большего масштаба, советую на видео показать структуру датасета и сказать что взят он был от сюда https://www.microsoft.com/en-us/download/details.aspx?id=54765. Модель же была взята предобученная. А если что, структура типичной модели cats vs dogs выглядеть может так (это тоже можно показать на видео):
+   ```python
+   model = Sequential()
+   
+   model.add(Convolution2D(32, 3, 3, border_mode='same', input_shape=(3, ROWS, COLS)))
+   model.add(BatchNormalization(axis=-1))
+   model.add(Activation(activation))
+   model.add(Convolution2D(32, 3, 3, border_mode='same', activation=activation))
+   model.add(MaxPooling2D(pool_size=(2, 2)))
+   
+   model.add(Convolution2D(64, 3, 3, border_mode='same'))
+   model.add(BatchNormalization(axis=-1))
+   model.add(Activation(activation))
+   model.add(Convolution2D(64, 3, 3, border_mode='same', activation=activation))
+   model.add(MaxPooling2D(pool_size=(2, 2)))
+   
+   model.add(Convolution2D(128, 3, 3, border_mode='same'))
+   model.add(BatchNormalization(axis=-1))
+   model.add(Activation(activation))
+   model.add(Convolution2D(128, 3, 3, border_mode='same', activation=activation))
+   model.add(MaxPooling2D(pool_size=(2, 2)))
+   
+   model.add(Convolution2D(256, 3, 3, border_mode='same'))
+   model.add(BatchNormalization(axis=-1))
+   model.add(Activation(activation))
+   model.add(Convolution2D(256, 3, 3, border_mode='same', activation=activation))
+   model.add(MaxPooling2D(pool_size=(2, 2)))
+   
+   model.add(Flatten())
+   model.add(Dense(256,init='he_uniform'))
+   model.add(BatchNormalization(axis=-1))
+   model.add(Activation(activation))
+   model.add(Dropout(0.2))
+   
+   model.add(Dense(256,init='he_uniform'))
+   model.add(BatchNormalization(axis=-1))
+   model.add(Activation(activation))
+   model.add(Dropout(0.2))
+   
+   model.add(Dense(1,init='he_uniform'))
+   model.add(BatchNormalization(axis=-1))
+   model.add(Activation('sigmoid'))
+   
+   model.compile(loss=objective, optimizer=optimizer, metrics=['accuracy'])
+   return model
+   ```
