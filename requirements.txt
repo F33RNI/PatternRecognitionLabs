@@ -4,3 +4,5 @@ Pillow>=10.1.0
 keras>=2.15.0
 transformers~=4.12.5
 pytorch~=2.1.2
+tensorflow-datasets>=4.9.4
+sklearn>=0.0
