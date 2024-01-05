@@ -34,7 +34,7 @@ from keras import backend
 from sklearn.model_selection import train_test_split
 
 # Path to the PetImages directory
-DATASET_PATH = "C:\\Users\\F3rni\\tensorflow_datasets\\downloads\\PetImages"
+DATASET_PATH = "PATH/TO/kagglecatsanddogs_5340/PetImages"
 
 # Train / validation batch size
 BATCH_SIZE = 32
